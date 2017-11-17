@@ -1,8 +1,8 @@
 # ElasticNotifier
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/elastic_notifier`. To experiment with that code, run `bin/console` for an interactive prompt.
+ElesticNotifier gem provides a simple API to send error notifications to an Elastic Search instance. 
 
-TODO: Delete this and the text above, and describe your gem
+It also comes with a built-in plugin for [exception_notification][exception_notification] gem to send error notifications caught by the Rack middleware. 
 
 ## Installation
 
@@ -94,8 +94,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome on GitHub at https://github.com/hspazio/elastic_notifier.
 
 
-[exception_notification]: https://github.com/smartinez87/exception_notification
-
 ## License
 
 Copyright (c) 2017 Fabio Pitino, released under the [MIT license](http://www.opensource.org/licenses/MIT).
+
+[exception_notification]: https://github.com/smartinez87/exception_notification
