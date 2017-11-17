@@ -10,7 +10,6 @@ describe ElasticNotifier do
       config.url = ENV['ELASTIC_NOTIFIER_URL']
       config.index = :elastic_notifier
       config.type = :signals
-      config.klass = ElasticNotifier::Error
     end
 
     begin
