@@ -2,6 +2,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/92763b5c5c012431d829/maintainability)](https://codeclimate.com/github/hspazio/elastic_notifier/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/92763b5c5c012431d829/test_coverage)](https://codeclimate.com/github/hspazio/elastic_notifier/test_coverage)
+[![Build Status](https://travis-ci.org/hspazio/elastic_notifier.svg?branch=master)](https://travis-ci.org/hspazio/elastic_notifier)
 
 ElesticNotifier gem provides a simple API to send error notifications to an Elastic Search instance. 
 
