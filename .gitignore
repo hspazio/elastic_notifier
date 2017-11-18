@@ -6,4 +6,5 @@
 /pkg/
 /spec/reports/
 /tmp/
-tags
+/tags
+/Gemfile.lock
