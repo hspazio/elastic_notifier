@@ -1,0 +1,30 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://my-kibana-instance.com:9200/elastic_notifier/signals
+    body:
+      encoding: UTF-8
+      string: '{"severity":"error","timestamp":"2017-11-20T17:42:10","program_name":"the-program-neme","pid":89343,"hostname":"test-hostname","ip":"123.123.123.123","data":{"name":"NoMethodError","message":"test error","backtrace":["test-backtrace"]}}'
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Location:
+      - "/elastic_notifier/signals/AV_aepditpUozF8RdZUj"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '171'
+    body:
+      encoding: UTF-8
+      string: '{"_index":"elastic_notifier","_type":"signals","_id":"AV_aepditpUozF8RdZUj","_version":1,"result":"created","_shards":{"total":2,"successful":2,"failed":0},"created":true}'
+    http_version: 
+  recorded_at: Mon, 20 Nov 2017 17:42:10 GMT
+recorded_with: VCR 3.0.3

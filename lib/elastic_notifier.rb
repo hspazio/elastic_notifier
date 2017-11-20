@@ -1,4 +1,5 @@
 require 'elasticsearch/persistence'
+require 'typhoeus/adapters/faraday'
 require 'socket'
 
 require 'elastic_notifier/signal'
@@ -22,8 +23,8 @@ module ElasticNotifier
       index = options.fetch(:index, Config.index)
       type = options.fetch(:type, Config.type)
 
-      @repository = Elasticsearch::Persistence::Repository.new do
-        client Elasticsearch::Client.new url: url, log: true
+      @repo ||= Elasticsearch::Persistence::Repository.new do
+        client Elasticsearch::Client.new url: url
         index  index
         type   type
       end
@@ -32,7 +33,7 @@ module ElasticNotifier
     # TODO: add options data to the Error json
     def notify_error(exception, options = {})
       error = Error.new(exception).to_hash
-      @repository.save(error)
+      @repo.save(error)
     end
   end
 end

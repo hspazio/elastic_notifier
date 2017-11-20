@@ -1,0 +1,31 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://example.com:9200/my_index/my_type
+    body:
+      encoding: UTF-8
+      string: '{"severity":"error","timestamp":"2017-11-20T17:59:55","program_name":"the-program-name","pid":92252,"hostname":"the-hostname","ip":"123.123.123.123","data":{"name":"StandardError","message":"something
+        bad happened","backtrace":null}}'
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Location:
+      - "/my_index/my_type/AV_aitwAtpUozF8RdZUp"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '163'
+    body:
+      encoding: UTF-8
+      string: '{"_index":"my_index","_type":"my_type","_id":"AV_aitwAtpUozF8RdZUp","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"created":true}'
+    http_version: 
+  recorded_at: Mon, 20 Nov 2017 17:59:56 GMT
+recorded_with: VCR 3.0.3

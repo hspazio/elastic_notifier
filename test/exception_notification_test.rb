@@ -2,14 +2,15 @@ require 'test_helper'
 
 describe ExceptionNotification::ElasticSearchNotifier do
   it 'delegates to ElasticNotifier' do
-    skip
     options = {
-      url: 'http://example.com',
+      url: 'http://example.com:9200',
       index: 'my_index',
       type: 'my_type'
     }
     notifier = ExceptionNotification::ElasticSearchNotifier.new(options)
     exception = StandardError.new("something bad happened")
-    notifier.call(exception)
+    VCR.use_cassette('exception_notification') do
+      notifier.call(exception)
+    end
   end
 end
