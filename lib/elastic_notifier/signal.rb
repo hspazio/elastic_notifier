@@ -33,7 +33,7 @@ module ElasticNotifier
     private 
 
     def find_ip_address
-      Socket.ip_address_list.find(&:ipv4_private?).ip_address
+      Socket.ip_address_list.find { |ip| ip.ipv4? && !ip.ipv4_loopback? }.ip_address
     end
   end
 end
