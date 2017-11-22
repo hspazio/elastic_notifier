@@ -22,8 +22,10 @@ module ElasticNotifier
     end
 
     def notify_error(exception, params = {})
-      program_name = @options.fetch(:program_name, $PROGRAM_NAME)
-      error = Error.new(exception, program_name: program_name).to_hash
+      overrides = {
+        program_name: @options[:program_name]
+      }
+      error = Error.new(exception, overrides).to_hash
       @repo.save(error)
     end
     alias call notify_error

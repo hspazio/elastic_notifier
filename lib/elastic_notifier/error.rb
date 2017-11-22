@@ -2,8 +2,8 @@ module ElasticNotifier
   class Error < Signal
     attr_reader :attributes
 
-    def initialize(error, program_name:)
-      super(program_name: program_name)
+    def initialize(error, overrides = {})
+      super(overrides)
       @error = error
     end
 
