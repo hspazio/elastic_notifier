@@ -6,17 +6,35 @@ describe ElasticNotifier do
   end
 
   it 'notifies an error to Elastic server' do
-    ElasticNotifier.configure do |config|
-      config.url = 'http://my-kibana-instance.com:9200'
-      config.index = :elastic_notifier
-      config.type = :signals
-    end
+    notifier = ElasticNotifier.new(
+      url: 'http://my-kibana-instance.com:9200',
+      index: :elastic_notifier,
+      type: :signals
+    )
 
     error = NoMethodError.new('test error')
     error.set_backtrace(['test-backtrace'])
 
     VCR.use_cassette('notify_error') do
-      result = ElasticNotifier.notify_error(error)
+      result = notifier.notify_error(error)
+
+      assert_equal 'elastic_notifier', result['_index']
+      assert_equal 'signals', result['_type']
+      assert_equal 'created', result['result']
+      refute result['_id'].empty?
+    end
+  end
+
+  it 'aliases #notify_error to #call' do
+    notifier = ElasticNotifier.new(
+      url: 'http://my-kibana-instance.com:9200'
+    )
+
+    error = NoMethodError.new('test error')
+    error.set_backtrace(['test-backtrace'])
+
+    VCR.use_cassette('notify_error') do
+      result = notifier.call(error)
 
       assert_equal 'elastic_notifier', result['_index']
       assert_equal 'signals', result['_type']

@@ -4,24 +4,18 @@ require 'socket'
 
 require 'elastic_notifier/signal'
 require 'elastic_notifier/error'
-require 'elastic_notifier/config'
 require 'elastic_notifier/version'
-require 'exception_notification'
 
 module ElasticNotifier
-  def self.configure
-    yield Config
-  end
-
-  def self.notify_error(exception)
-    Notifier.new.notify_error(exception)
+  def self.new(options = {})
+    Notifier.new(options)
   end
 
   class Notifier
     def initialize(options = {})
-      url = options.fetch(:url, Config.url || ENV['ELASTIC_NOTIFIER_URL'])
-      index = options.fetch(:index, Config.index)
-      type = options.fetch(:type, Config.type)
+      url = options[:url]
+      index = options.fetch(:index, :elastic_notifier)
+      type = options.fetch(:type, :signals)
 
       @repo ||= Elasticsearch::Persistence::Repository.new do
         client Elasticsearch::Client.new url: url
@@ -35,6 +29,7 @@ module ElasticNotifier
       error = Error.new(exception).to_hash
       @repo.save(error)
     end
+    alias call notify_error
   end
 end
 
