@@ -28,9 +28,9 @@ Or install it yourself as:
 
 ```ruby
 NOTIFIER = ElasticNotifier.new(
-  url: 'http://myserver.com:9200', # default is http://localhost:9200
-  index: :my_custom_index,  # default is :elastic_notifier
-  type: :my_document_type  # default is :signals
+  url: "http://myserver.com:9200", # default is http://localhost:9200
+  index: "my_custom_index",        # default is :elastic_notifier
+  type: "my_document_type"         # default is :signals
 )
 ```
 
@@ -53,7 +53,7 @@ If you are already using [exception_notification][exception_notification] gem wi
 In `config/initializers/elastic_notifier.rb`, after initializing the notifier object as described above, you need to register it [as documented here](https://github.com/smartinez87/exception_notification#custom-notifier).
 
 ```ruby
-notifier = ElasticNotifier.new(url: 'http://myserver.com:9200'localhost:9200)
+notifier = ElasticNotifier.new(url: "http://myserver.com:9200")
 ExceptionNotifier.add_notifier :elastic_search, notifier
 ```
 
