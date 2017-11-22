@@ -2,12 +2,12 @@ module ElasticNotifier
   class Signal
     attr_reader :attributes
 
-    def initialize
+    def initialize(program_name:)
       @pid = Process.pid
       @hostname = Socket.gethostname
       @ip = find_ip_address
       @timestamp = Time.now.strftime('%Y-%m-%dT%H:%M:%S')
-      @program_name = $PROGRAM_NAME
+      @program_name = program_name
     end
 
     def to_hash

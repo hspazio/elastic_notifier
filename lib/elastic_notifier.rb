@@ -12,21 +12,18 @@ module ElasticNotifier
   end
 
   class Notifier
-    def initialize(options = {})
-      url = options[:url]
-      index = options.fetch(:index, :elastic_notifier)
-      type = options.fetch(:type, :signals)
-
+    def initialize(options)
       @repo ||= Elasticsearch::Persistence::Repository.new do
-        client Elasticsearch::Client.new url: url
-        index  index
-        type   type
+        client Elasticsearch::Client.new url: options[:url]
+        index  options.fetch(:index, :elastic_notifier)
+        type   options.fetch(:type, :signals)
       end
+      @options = options
     end
 
-    # TODO: add options data to the Error json
-    def notify_error(exception, options = {})
-      error = Error.new(exception).to_hash
+    def notify_error(exception, params = {})
+      program_name = @options.fetch(:program_name, $PROGRAM_NAME)
+      error = Error.new(exception, program_name: program_name).to_hash
       @repo.save(error)
     end
     alias call notify_error

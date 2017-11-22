@@ -42,4 +42,23 @@ describe ElasticNotifier do
       refute result['_id'].empty?
     end
   end
+
+  it 'overrides the program_name' do
+    notifier = ElasticNotifier.new(
+      url: 'http://my-kibana-instance.com:9200',
+      program_name: 'my-program-name'
+    )
+
+    error = NoMethodError.new('test error')
+    error.set_backtrace(['test-backtrace'])
+
+    VCR.use_cassette('notify_error_with_overrides') do
+      result = notifier.call(error)
+
+      assert_equal 'elastic_notifier', result['_index']
+      assert_equal 'signals', result['_type']
+      assert_equal 'created', result['result']
+      refute result['_id'].empty?
+    end
+  end
 end
