@@ -78,6 +78,12 @@ At the time the notifier is invoked it collects some information from the enviro
 
 ```
 
+It is possible to override parameters such as `program_name` which will remain static for the notifier instance.
+
+```ruby
+notifier = ElasticNotifier.new(url: "http://myserver.com:9200", program_name: "custom_name")
+```
+
 ## Contributing
 
 Bug reports and pull requests are very welcome. Please be aware that you are expected to follow the [code of conduct](https://github.com/hspazio/elastic_notifier/blob/master/CODE_OF_CONDUCT.md).
