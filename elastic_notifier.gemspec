@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "vcr", "~> 3.0"
   spec.add_development_dependency "webmock", "~> 3.0"
+  spec.add_development_dependency "simplecov"
   spec.add_dependency "elasticsearch-persistence", " ~> 5.0"
   spec.add_dependency "typhoeus"
 end
