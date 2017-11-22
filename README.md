@@ -4,9 +4,9 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/92763b5c5c012431d829/test_coverage)](https://codeclimate.com/github/hspazio/elastic_notifier/test_coverage)
 [![Build Status](https://travis-ci.org/hspazio/elastic_notifier.svg?branch=master)](https://travis-ci.org/hspazio/elastic_notifier)
 
-ElesticNotifier gem provides a simple API to send error notifications to an Elastic Search instance. 
+ElasticNotifier gem provides a simple API to send error notifications to an Elastic Search instance. 
 
-It also comes with a built-in plugin for [exception_notification][exception_notification] gem to send error notifications caught by the Rack middleware. 
+It can also be used as plug-in for [exception_notification][exception_notification] gem to send error notifications caught by the Rack middleware. 
 
 ## Installation
 
@@ -24,46 +24,37 @@ Or install it yourself as:
 
     $ gem install elastic_notifier
 
-## As a standalone notifier
-
-Use the code below if you want to override the default configurations. For __Rails__ applications you can add the snippet to `config/initializers/elastic_notifier.rb`
+## Usage
 
 ```ruby
-ElasticNotifier.configure do |config|
-  # default url from environment variable: ENV['ELASTIC_NOTIFIER_URL']
-  config.url = 'http://myelasticsearch.server.com:9200' 
-  config.index = :my_custom_index  # default is :elastic_notifier
-  config.type = :my_document_type  # default is :signals
-end
+NOTIFIER = ElasticNotifier.new(
+  url: 'http://myserver.com:9200', # default is http://localhost:9200
+  index: :my_custom_index,  # default is :elastic_notifier
+  type: :my_document_type  # default is :signals
+)
 ```
+
+For __Rails__ applications you can add the code above to `config/initializers/elastic_notifier.rb` so it will be available throghout the app.
+
 Then send error notifications as you rescue errors:
 
 ```ruby
 begin
   # some code that raises an exception
 rescue => error
-  ElasticNotifier.notify_error(error)
+  NOTIFIER.notify_error(error)
 end
 ```
 
 ## As ExceptionNotification's Plugin
 
-If you are already using [exception_notification][exception_notification] gem within a Rails app you can use ElasticNotifier's plugin.
+If you are already using [exception_notification][exception_notification] gem within a Rails app you can use ElasticNotifier out of the box.
 
-Simply add the configurations to the `ExceptionNotification::Rack` middleware [as documented here](https://github.com/smartinez87/exception_notification#rails).
+In `config/initializers/elastic_notifier.rb`, after initializing the notifier object as described above, you need to register it [as documented here](https://github.com/smartinez87/exception_notification#custom-notifier).
 
 ```ruby
-Rails.application.config.middleware.use ExceptionNotification::Rack,
-  :email => {
-    :email_prefix => "[PREFIX] ",
-    :sender_address => %{"notifier" <notifier@example.com>},
-    :exception_recipients => %w{exceptions@example.com}
-  },
-  :elastic_search => {
-    :url => 'http://myelasticsearch.server.com:9200',
-    :index => 'elastic_notifier',
-    :username => 'signals'
-  }
+notifier = ElasticNotifier.new(url: 'http://myserver.com:9200'localhost:9200)
+ExceptionNotifier.add_notifier :elastic_search, notifier
 ```
 
 ## What information is being sent?
