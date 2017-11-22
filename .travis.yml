@@ -9,6 +9,6 @@ before_script:
   - ./cc-test-reporter before-build
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
- env:
+env:
   global:
     - CC_TEST_REPORTER_ID=ec4fd9d5fdb3f0b610069686575e97d79b4b3c03f3102517e6145076b5ee22d5
