@@ -7,11 +7,12 @@ module ElasticNotifier
       @hostname = Socket.gethostname
       @ip = find_ip_address
       @timestamp = Time.now.strftime('%Y-%m-%dT%H:%M:%S')
-      @program_name = overrides[:program_name] || $PROGRAM_NAME
+      @program_name = $PROGRAM_NAME
+      @overrides = overrides
     end
 
     def to_hash
-      { 
+      {
         severity: severity,
         timestamp: @timestamp,
         program_name: @program_name,
@@ -19,7 +20,7 @@ module ElasticNotifier
         hostname: @hostname,
         ip: @ip,
         data: data
-      }
+      }.merge(@overrides)
     end
 
     def severity
@@ -30,7 +31,7 @@ module ElasticNotifier
       raise NotImplementedError
     end
 
-    private 
+    private
 
     def find_ip_address
       Socket.ip_address_list.find { |ip| ip.ipv4? && !ip.ipv4_loopback? }.ip_address

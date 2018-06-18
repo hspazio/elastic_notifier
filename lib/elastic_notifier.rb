@@ -24,7 +24,7 @@ module ElasticNotifier
     def notify_error(exception, params = {})
       overrides = {
         program_name: @options[:program_name]
-      }
+      }.merge(params)
       error = Error.new(exception, overrides).to_hash
       @repo.save(error)
     end
