@@ -5,7 +5,7 @@ http_interactions:
     uri: http://my-kibana-instance.com:9200/elastic_notifier/signals
     body:
       encoding: UTF-8
-      string: '{"severity":"error","timestamp":"2017-11-20T17:42:10","program_name":"my-program-name","pid":89343,"hostname":"test-hostname","ip":"123.123.123.123","data":{"name":"NoMethodError","message":"test error","backtrace":["test-backtrace"]}}'
+      string: '{"severity":"error","timestamp":"2017-11-20T17:42:10","program_name":"static-override","runtime":"runtime-override","pid":89343,"hostname":"test-hostname","ip":"123.123.123.123","data":{"name":"NoMethodError","message":"test error","backtrace":["test-backtrace"]}}'
     headers:
       User-Agent:
       - Faraday v0.13.1

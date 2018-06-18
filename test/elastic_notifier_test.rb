@@ -43,17 +43,17 @@ describe ElasticNotifier do
     end
   end
 
-  it 'overrides the program_name' do
+  it 'accepts static and runtime overrides' do
     notifier = ElasticNotifier.new(
       url: 'http://my-kibana-instance.com:9200',
-      program_name: 'my-program-name'
+      program_name: 'static-override'
     )
 
     error = NoMethodError.new('test error')
     error.set_backtrace(['test-backtrace'])
 
     VCR.use_cassette('notify_error_with_overrides') do
-      result = notifier.call(error)
+      result = notifier.call(error, runtime: 'runtime-override')
 
       assert_equal 'elastic_notifier', result['_index']
       assert_equal 'signals', result['_type']
